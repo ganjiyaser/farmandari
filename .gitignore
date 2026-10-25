@@ -1,0 +1,43 @@
+# Runtime data and user databases
+data/
+*.db
+*.db-wal
+*.db-shm
+*.db.dev-backup
+backups/
+exports/
+files/
+logs/
+users/
+*.log
+
+# Local secrets
+.env
+.env.*
+_gh_auth.log
+
+# Build artifacts
+build/
+dist/
+Output/
+*.exe
+*.msi
+
+# Python caches and virtual environments
+__pycache__/
+*.py[cod]
+*.pyd
+.venv/
+venv/
+env/
+
+# Editors and OS files
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
+
+# Internal reports (not part of the source release)
+CODE_REVIEW_REPORT.md
+WORK_REPORT.md
+INSTALL_GUIDE.md

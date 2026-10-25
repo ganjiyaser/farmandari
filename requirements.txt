@@ -1,0 +1,19 @@
+PyQt6>=6.4.0
+PyQt6-Fluent-Widgets>=1.11.0
+# Do not install PyQt-Fluent-Widgets (PyQt5). It overwrites the qfluentwidgets package.
+SQLAlchemy>=2.0.0
+pydantic>=2.5.0
+pydantic-settings>=2.0.0
+requests>=2.28.0
+openpyxl>=3.1.0
+reportlab>=4.0.0
+python-dateutil>=2.8.0
+pyserial>=3.5
+jdatetime>=4.0.0
+Pillow>=10.0.0
+# Required for correct Persian text in exported PDFs (export_service.rtl()).
+# Without these, rtl() is a no-op and Arabic shaping/joining is lost.
+arabic-reshaper>=3.0.0
+python-bidi>=0.4.2
+# utils/auto_updater.py imports this at module level.
+packaging>=23.0
