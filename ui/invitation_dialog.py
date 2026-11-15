@@ -1,10 +1,10 @@
 """دعوتنامه: پیگیری وضعیت پاسخ شرکت‌کنندگان (RSVP) و چاپ دعوتنامهٔ رسمی."""
 
 import jdatetime
-from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QTextDocument, QFont, QPageLayout
-from PyQt6.QtPrintSupport import QPrinter, QPrintPreviewDialog
-from PyQt6.QtWidgets import (
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QTextDocument, QFont, QPageLayout
+from PyQt5.QtPrintSupport import QPrinter, QPrintPreviewDialog
+from PyQt5.QtWidgets import (
     QDialog, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QTableWidget,
     QTableWidgetItem, QHeaderView, QComboBox, QTextBrowser, QFileDialog,
     QAbstractItemView, QMessageBox, QFrame

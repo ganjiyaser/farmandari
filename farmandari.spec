@@ -1,30 +1,46 @@
 # -*- mode: python ; coding: utf-8 -*-
+import os
 import sys
 from pathlib import Path
 
 ROOT = Path(SPECPATH).resolve()
 sys.path.insert(0, str(ROOT))
 
+ARCH = os.environ.get("FARMANDARI_ARCH", "x64").lower()
+BUILD_NAME = "FarmandariApp-" + ARCH
+
 hiddenimports = [
-    'PyQt6',
-    'PyQt6.QtCore',
-    'PyQt6.QtGui',
-    'PyQt6.QtWidgets',
-    'PyQt6.QtNetwork',
-    'PyQt6.QtPrintSupport',
-    'PyQt6.sip',
+    'PyQt5',
+    'PyQt5.QtCore',
+    'PyQt5.QtGui',
+    'PyQt5.QtWidgets',
+    'PyQt5.QtNetwork',
+    'PyQt5.QtPrintSupport',
+    'PyQt5.QtSvg',
+    'PyQt5.sip',
     'qfluentwidgets',
+    'qframelesswindow',
+    'qframelesswindow.windows',
+    'qframelesswindow.windows.window_effect',
+    'qframelesswindow.utils.win32_utils',
+    'win32api',
+    'win32con',
+    'win32gui',
+    'win32print',
+    'win32comext.shell',
+    'win32comext.shell.shellcon',
     'sqlalchemy',
     'sqlalchemy.dialects.sqlite',
-    'pydantic',
-    'pydantic_core',
-    'pydantic_settings',
+    'sqlalchemy.sql.default_comparator',
     'requests',
     'openpyxl',
+    'openpyxl.cell._writer',
     'reportlab',
     'reportlab.lib.pagesizes',
     'reportlab.pdfbase',
     'reportlab.pdfbase.ttfonts',
+    'reportlab.pdfbase._fontdata',
+    'reportlab.pdfbase.pdfmetrics',
     'dateutil',
     'dateutil.tz',
     'jdatetime',
@@ -104,13 +120,23 @@ excludes = [
     'notebook',
     'sphinx',
     'docutils',
+    'PyQt6',
+    'PySide2',
+    'PySide6',
+    'pydantic',
+    'pydantic_core',
+    'pydantic_settings',
+]
+
+datas = [
+    (str(ROOT / 'resources'), 'resources'),
 ]
 
 a = Analysis(
     [str(ROOT / 'main.py')],
     pathex=[str(ROOT)],
     binaries=[],
-    datas=[],
+    datas=datas,
     hiddenimports=hiddenimports,
     hookspath=[],
     hooksconfig={},
@@ -126,7 +152,7 @@ exe = EXE(
     a.scripts,
     [],
     exclude_binaries=True,
-    name='FarmandariApp',
+    name=BUILD_NAME,
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
@@ -148,5 +174,5 @@ coll = COLLECT(
     strip=False,
     upx=False,
     upx_exclude=[],
-    name='FarmandariApp',
+    name=BUILD_NAME,
 )

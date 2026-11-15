@@ -1,11 +1,11 @@
-from PyQt6.QtWidgets import (
+from PyQt5.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel,
     QLineEdit, QTableWidget, QTableWidgetItem, QHeaderView,
     QFrame, QMessageBox, QDialog, QFormLayout, QTextEdit,
     QTreeWidget, QTreeWidgetItem, QSplitter, QComboBox,
     QAbstractItemView
 )
-from PyQt6.QtCore import Qt, QTimer
+from PyQt5.QtCore import Qt, QTimer
 import uuid
 from qfluentwidgets import TitleLabel, PrimaryPushButton, PushButton, FluentIcon as FIF, ElevatedCardWidget
 from ui.styles import Styles, get_font, alpha

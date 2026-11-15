@@ -1,7 +1,7 @@
 """دیالوگ تأیید همسان و خوانا برای عملیات‌های حساس (حذف، بازیابی، ارسال انبوه)."""
 
-from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QDialog, QHBoxLayout, QLabel, QPushButton, QVBoxLayout
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QDialog, QHBoxLayout, QLabel, QPushButton, QVBoxLayout
 
 from ui.styles import FONT_CSS, FS_BODY, FS_SECTION, SPACE_LG, Styles, get_font
 from ui.theme import theme_manager

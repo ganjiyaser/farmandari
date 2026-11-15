@@ -2,7 +2,7 @@
 سیستم طراحی مرکزی برنامه - بر اساس GitHub Primer Design System
 تمام صفحات باید ظاهر خودشان را از اینجا بگیرند تا یکدست و حرفه‌ای بمانند.
 """
-from PyQt6.QtGui import QFont
+from PyQt5.QtGui import QFont
 from ui.theme import theme_manager
 
 # --- پشته‌ی فونت حرفه‌ای -------------------------------------------------

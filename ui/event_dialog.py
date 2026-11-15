@@ -1,15 +1,15 @@
 import logging
 import uuid
 import jdatetime
-from PyQt6.QtWidgets import (
+from PyQt5.QtWidgets import (
     QDialog, QVBoxLayout, QHBoxLayout, QGridLayout, QPushButton, QLabel,
     QLineEdit, QTextEdit, QComboBox,
     QCheckBox, QMessageBox, QTimeEdit, QWidget, QFrame,
     QTableWidget, QTableWidgetItem, QHeaderView,
     QAbstractItemView, QScrollArea, QSizePolicy, QListWidget, QListWidgetItem
 )
-from PyQt6.QtCore import Qt, QTime
-from PyQt6.QtGui import QIntValidator
+from PyQt5.QtCore import Qt, QTime
+from PyQt5.QtGui import QIntValidator
 from ui.styles import Styles, get_font
 from ui.theme import theme_manager
 from models.models import EventType, EventPriority, EventStatus, OfficialPosition
@@ -789,7 +789,7 @@ class EventDialog(QDialog):
             )
             item.setData(Qt.ItemDataRole.UserRole, int(official.id))
             if official.color:
-                from PyQt6.QtGui import QColor
+                from PyQt5.QtGui import QColor
                 item.setForeground(QColor(official.color))
             self.invited_list.addItem(item)
 

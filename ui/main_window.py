@@ -4,9 +4,9 @@ import logging
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from PyQt6.QtWidgets import QApplication, QLabel
-from PyQt6.QtCore import Qt, QLockFile, QStandardPaths
-from PyQt6.QtGui import QShortcut, QKeySequence, QIcon
+from PyQt5.QtWidgets import QApplication, QLabel, QShortcut
+from PyQt5.QtCore import Qt, QLockFile, QStandardPaths
+from PyQt5.QtGui import QKeySequence, QIcon
 
 from qfluentwidgets import (
     FluentWindow, NavigationItemPosition, setTheme, Theme, setThemeColor,
@@ -334,7 +334,24 @@ def _warn_already_running():
         logging.warning("Second instance blocked: %s", msg_fa)
 
 
+def _enable_high_dpi():
+    """Scale the UI correctly on Win7/10 displays with DPI scaling enabled.
+
+    Qt 6 turns this on automatically, but Qt 5 requires the attributes before
+    QApplication is constructed (and Qt 5.14+ supports fractional scaling).
+    """
+    for attr_name in ("AA_EnableHighDpiScaling", "AA_UseHighDpiPixmaps"):
+        attr = getattr(Qt, attr_name, None)
+        if attr is not None:
+            QApplication.setAttribute(attr, True)
+
+    rounding_enum = getattr(Qt, "HighDpiScaleFactorRoundingPolicy", None)
+    if rounding_enum is not None:
+        QApplication.setHighDpiScaleFactorRoundingPolicy(rounding_enum.PassThrough)
+
+
 def main():
+    _enable_high_dpi()
     # جلوگیری از اجرای دوبارهٔ برنامه: دو نمونه همزمان روی همان دیتابیس
     # SQLite و همان پورت سریال مودم تداخل ایجاد می‌کنند
     lock = QLockFile(

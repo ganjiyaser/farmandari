@@ -5,7 +5,7 @@ Based on GitHub's Primer design system colors
 from dataclasses import dataclass, field
 from enum import Enum
 from typing import Dict, Optional, Any
-from PyQt6.QtCore import QObject, pyqtSignal
+from PyQt5.QtCore import QObject, pyqtSignal
 from qfluentwidgets import Theme, setTheme
 import json
 import copy

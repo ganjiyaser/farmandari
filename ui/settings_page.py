@@ -1,10 +1,10 @@
-from PyQt6.QtWidgets import (
+from PyQt5.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel,
     QLineEdit, QFrame, QFormLayout, QTextEdit, QComboBox,
     QCheckBox, QMessageBox, QGroupBox, QTabWidget, QSpinBox,
     QRadioButton, QButtonGroup, QFileDialog, QApplication, QTimeEdit
 )
-from PyQt6.QtCore import Qt, QTime
+from PyQt5.QtCore import Qt, QTime
 import logging
 from ui.styles import Styles, get_font
 from ui.theme import theme_manager
@@ -1185,7 +1185,7 @@ class SettingsPage(QWidget):
     def _restart_app(self):
         """اجرای مجدد برنامه (برای اعمال تغییر حالت ذخیره‌سازی)."""
         try:
-            from PyQt6.QtCore import QProcess
+            from PyQt5.QtCore import QProcess
 
             frozen = getattr(sys, "frozen", False)
             if frozen:

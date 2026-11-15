@@ -1,10 +1,10 @@
 import jdatetime
-from PyQt6.QtWidgets import (
+from PyQt5.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel,
     QFrame, QGridLayout, QScrollArea, QSizePolicy, QGraphicsOpacityEffect,
     QMessageBox, QCheckBox, QTabWidget
 )
-from PyQt6.QtCore import Qt, QPropertyAnimation, QEasingCurve
+from PyQt5.QtCore import Qt, QPropertyAnimation, QEasingCurve
 
 from ui.styles import Styles, get_font
 from ui.theme import theme_manager

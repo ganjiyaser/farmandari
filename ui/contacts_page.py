@@ -1,12 +1,12 @@
-from PyQt6.QtWidgets import (
+from PyQt5.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel,
     QLineEdit, QTableWidget, QTableWidgetItem, QHeaderView,
     QFrame, QMessageBox, QDialog, QFormLayout, QTextEdit,
     QComboBox, QAbstractItemView, QCheckBox, QMenu, QListWidget,
     QListWidgetItem, QSizePolicy, QGridLayout
 )
-from PyQt6.QtCore import Qt, pyqtSignal, QTimer, QEvent
-from PyQt6.QtGui import QColor, QFontMetrics
+from PyQt5.QtCore import Qt, pyqtSignal, QTimer, QEvent
+from PyQt5.QtGui import QColor, QFontMetrics
 import uuid
 from qfluentwidgets import (
     TitleLabel, PrimaryPushButton, PushButton, SearchLineEdit,

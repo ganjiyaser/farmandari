@@ -1,8 +1,8 @@
-from PyQt6.QtWidgets import (
+from PyQt5.QtWidgets import (
     QDialog, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit,
     QFrame, QScrollArea, QPushButton
 )
-from PyQt6.QtCore import Qt, QTimer
+from PyQt5.QtCore import Qt, QTimer
 from ui.styles import Styles, get_font
 from ui.theme import theme_manager
 from services.repositories import (

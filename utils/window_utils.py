@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """ابزارهای چیدمان پنجره‌ها روی مانیتور"""
-from PyQt6.QtWidgets import QApplication
+from PyQt5.QtWidgets import QApplication
 
 
 def center_on_screen(widget, available=None):

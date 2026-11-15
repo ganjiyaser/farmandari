@@ -1,10 +1,10 @@
-from PyQt6.QtWidgets import (
+from PyQt5.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel,
     QLineEdit, QTableWidget, QTableWidgetItem, QHeaderView,
     QFrame, QMessageBox, QComboBox, QFileDialog, QDialog,
     QFormLayout, QTextEdit, QDateEdit, QSplitter, QGroupBox
 )
-from PyQt6.QtCore import Qt, QDate, QTimer
+from PyQt5.QtCore import Qt, QDate, QTimer
 import os
 from ui.styles import Styles, get_font
 from ui.theme import theme_manager

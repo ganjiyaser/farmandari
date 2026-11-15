@@ -3,8 +3,8 @@
 from datetime import datetime
 
 import jdatetime
-from PyQt6.QtCore import Qt, pyqtSignal
-from PyQt6.QtWidgets import (
+from PyQt5.QtCore import Qt, pyqtSignal
+from PyQt5.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QLineEdit,
     QTextEdit, QDialog, QComboBox, QMessageBox, QFrame, QTabWidget,
     QScrollArea, QGridLayout

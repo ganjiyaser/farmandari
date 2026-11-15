@@ -1,10 +1,10 @@
-from PyQt6.QtWidgets import (
+from PyQt5.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton,
     QFrame, QCheckBox, QMessageBox, QGroupBox, QFileDialog,
     QColorDialog, QGridLayout
 )
-from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QColor
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QColor
 from ui.styles import Styles, get_font
 from ui.theme import theme_manager, CustomColors
 from services.repositories import setting_repo
@@ -224,7 +224,7 @@ class ColorSettingsWidget(QWidget):
     def _repaint_all(self, widget):
         if widget is None:
             return
-        from PyQt6.QtWidgets import QApplication
+        from PyQt5.QtWidgets import QApplication
         for w in QApplication.allWidgets():
             try:
                 w.repaint()

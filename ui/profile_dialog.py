@@ -1,10 +1,10 @@
-from PyQt6.QtWidgets import (
+from PyQt5.QtWidgets import (
     QDialog, QVBoxLayout, QHBoxLayout, QLabel, QPushButton,
     QFrame, QTabWidget, QWidget, QFormLayout, QLineEdit,
     QTextEdit, QComboBox, QTableWidget, QTableWidgetItem,
     QHeaderView, QFileDialog, QMessageBox
 )
-from PyQt6.QtCore import Qt
+from PyQt5.QtCore import Qt
 from ui.styles import Styles, get_font
 from ui.theme import theme_manager
 from services.repositories import contact_repo, profile_repo, file_repo, message_repo

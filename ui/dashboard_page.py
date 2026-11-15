@@ -1,7 +1,7 @@
-from PyQt6.QtWidgets import (
+from PyQt5.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QGridLayout, QFrame
 )
-from PyQt6.QtCore import Qt
+from PyQt5.QtCore import Qt
 from qfluentwidgets import (
     TitleLabel, SubtitleLabel, StrongBodyLabel, BodyLabel,
     ElevatedCardWidget, PrimaryPushButton, FluentIcon as FIF,

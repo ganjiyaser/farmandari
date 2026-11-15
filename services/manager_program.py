@@ -13,7 +13,7 @@ import logging
 import time
 
 import jdatetime
-from PyQt6.QtCore import QThread, pyqtSignal
+from PyQt5.QtCore import QThread, pyqtSignal
 
 from services.repositories import calendar_repo, setting_repo, user_repo
 from services.sms_service import normalize_mobile, sms_service

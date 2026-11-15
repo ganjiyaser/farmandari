@@ -1,8 +1,8 @@
-from PyQt6.QtWidgets import (
+from PyQt5.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton,
     QLineEdit, QTextEdit, QDialog, QCheckBox, QFrame, QGridLayout
 )
-from PyQt6.QtCore import Qt, pyqtSignal
+from PyQt5.QtCore import Qt, pyqtSignal
 from ui.styles import Styles, get_font
 from ui.theme import theme_manager
 from ui.dialogs import confirm_delete
@@ -102,7 +102,7 @@ class TaskDialog(QDialog):
         lbl3.setStyleSheet(f"color: {c.fg_default};")
         row.addWidget(lbl3)
 
-        from PyQt6.QtWidgets import QComboBox
+        from PyQt5.QtWidgets import QComboBox
         self.priority_combo = QComboBox()
         self.priority_combo.addItems(["کم", "متوسط", "زیاد"])
         self.priority_combo.setCurrentIndex(1)
@@ -140,7 +140,7 @@ class TaskDialog(QDialog):
     def _save(self):
         title = self.title_input.text().strip()
         if not title:
-            from PyQt6.QtWidgets import QMessageBox
+            from PyQt5.QtWidgets import QMessageBox
             QMessageBox.warning(self, "خطا", "عنوان را وارد کنید")
             return
 
@@ -151,7 +151,7 @@ class TaskDialog(QDialog):
         if due:
             # تاریخ باید شمسی معتبر و قالب YYYY/MM/DD باشد؛ مقایسه‌های
             # رشته‌ای (کارهای امروز) بدون صفر ابتدا هرگز مطابقت نمی‌کنند
-            from PyQt6.QtWidgets import QMessageBox
+            from PyQt5.QtWidgets import QMessageBox
             parts = due.split("/")
             if len(parts) == 3 and all(p.isdigit() for p in parts):
                 y, m, d = int(parts[0]), int(parts[1]), int(parts[2])
@@ -170,7 +170,7 @@ class TaskDialog(QDialog):
                 )
                 return
 
-        from PyQt6.QtWidgets import QMessageBox
+        from PyQt5.QtWidgets import QMessageBox
         try:
             task_repo.create(
                 title=title,
@@ -179,7 +179,7 @@ class TaskDialog(QDialog):
                 due_date=due,
             )
         except Exception as e:
-            # خطای مدیریت‌نشده در slot در PyQt6 کل برنامه را می‌بندد
+            # خطای مدیریت‌نشده در slot در PyQt5 کل برنامه را می‌بندد
             QMessageBox.critical(self, "خطا در ذخیره", str(e))
             return
 
@@ -267,7 +267,7 @@ class TaskRow(QFrame):
             task_repo.toggle_done(self.task.id)
             self.toggled.emit()
         except Exception as e:
-            from PyQt6.QtWidgets import QMessageBox
+            from PyQt5.QtWidgets import QMessageBox
             QMessageBox.critical(self, "خطا", str(e))
 
     def _delete(self):
@@ -276,7 +276,7 @@ class TaskRow(QFrame):
                 task_repo.delete(self.task.id)
                 self.deleted.emit()
             except Exception as e:
-                from PyQt6.QtWidgets import QMessageBox
+                from PyQt5.QtWidgets import QMessageBox
                 QMessageBox.critical(self, "خطا", str(e))
 
 

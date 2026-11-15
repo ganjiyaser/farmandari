@@ -7,15 +7,15 @@ from dataclasses import dataclass
 from typing import Callable, List, Optional, Tuple
 
 import jdatetime
-from PyQt6.QtCore import (
+from PyQt5.QtCore import (
     QMarginsF, QLineF, QPointF, QRectF, QStandardPaths, Qt, QTimer, pyqtSignal,
 )
-from PyQt6.QtGui import (
-    QAction, QBrush, QColor, QFont, QFontMetrics, QCursor, QPageLayout,
+from PyQt5.QtGui import (
+    QBrush, QColor, QFont, QFontMetrics, QCursor, QPageLayout,
     QPageSize, QPainter, QPainterPath, QPen, QTextLayout, QTextOption,
 )
-from PyQt6.QtPrintSupport import QPrinter, QPrintPreviewDialog
-from PyQt6.QtWidgets import (
+from PyQt5.QtPrintSupport import QPrinter, QPrintPreviewDialog
+from PyQt5.QtWidgets import (
     QAbstractItemView, QApplication, QDialog, QFileDialog, QFrame, QGraphicsItem,
     QGraphicsScene, QGraphicsSimpleTextItem, QGraphicsView, QGridLayout,
     QHBoxLayout, QHeaderView, QLabel, QLineEdit, QMenu, QMessageBox, QPushButton,

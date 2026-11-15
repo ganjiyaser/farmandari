@@ -2,13 +2,13 @@ import os
 import re
 import uuid
 from datetime import datetime
-from PyQt6.QtWidgets import (
+from PyQt5.QtWidgets import (
     QDialog, QVBoxLayout, QHBoxLayout, QPushButton, QLabel,
     QTableWidget, QTableWidgetItem, QHeaderView, QFrame,
     QMessageBox, QComboBox, QFileDialog, QProgressBar,
     QAbstractItemView
 )
-from PyQt6.QtCore import Qt, QThread, pyqtSignal
+from PyQt5.QtCore import Qt, QThread, pyqtSignal
 import openpyxl
 from ui.styles import Styles, get_font
 from ui.theme import theme_manager

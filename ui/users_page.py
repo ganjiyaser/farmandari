@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import (
+from PyQt5.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton,
     QLineEdit, QTableWidget, QTableWidgetItem, QHeaderView,
     QFrame, QMessageBox, QDialog, QFormLayout, QComboBox,
@@ -7,8 +7,9 @@ from PyQt6.QtWidgets import (
 )
 import os
 import jdatetime
-from PyQt6.QtCore import Qt, pyqtSignal, QTimer
-from PyQt6.QtGui import QColor
+from typing import Optional
+from PyQt5.QtCore import Qt, pyqtSignal, QTimer
+from PyQt5.QtGui import QColor
 from ui.styles import Styles, get_font
 from ui.theme import theme_manager
 from ui.dialogs import confirm_delete
@@ -19,7 +20,7 @@ from core.database import get_user_db_path, get_user_files_dir
 MIN_PASSWORD_LEN = 8
 
 
-def _current_user() -> User | None:
+def _current_user() -> Optional[User]:
     try:
         uid = setting_repo.get_setting("current_user_id")
         return user_repo.get_by_id(int(uid)) if uid else None

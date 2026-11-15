@@ -1,8 +1,8 @@
 """دیالوگ‌های ویرایش پست سازمانی و اطلاعات کامل پرسنل."""
 
 import jdatetime
-from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import (
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import (
     QDialog, QVBoxLayout, QHBoxLayout, QGridLayout, QLabel, QPushButton,
     QLineEdit, QTextEdit, QComboBox, QSpinBox, QCheckBox, QMessageBox,
     QScrollArea, QWidget, QFrame,

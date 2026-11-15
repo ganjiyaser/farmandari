@@ -121,7 +121,7 @@ def install_excepthook() -> None:
         except Exception:
             pass
         try:
-            from PyQt6.QtWidgets import QApplication, QMessageBox
+            from PyQt5.QtWidgets import QApplication, QMessageBox
             if QApplication.instance():
                 QMessageBox.critical(
                     None,

@@ -3,10 +3,10 @@
 import html as html_lib
 
 import jdatetime
-from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QTextDocument, QPageLayout
-from PyQt6.QtPrintSupport import QPrinter, QPrintPreviewDialog
-from PyQt6.QtWidgets import QMessageBox, QFileDialog, QDialog
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QTextDocument, QPageLayout
+from PyQt5.QtPrintSupport import QPrinter, QPrintPreviewDialog
+from PyQt5.QtWidgets import QMessageBox, QFileDialog, QDialog
 
 from core.config import settings
 from models.models import DecisionStatus, LetterDirection, LetterStatus

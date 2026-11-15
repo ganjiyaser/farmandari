@@ -1,19 +1,25 @@
-PyQt6>=6.4.0
-PyQt6-Fluent-Widgets>=1.11.0
-# Do not install PyQt-Fluent-Widgets (PyQt5). It overwrites the qfluentwidgets package.
-SQLAlchemy>=2.0.0
-pydantic>=2.5.0
-pydantic-settings>=2.0.0
-requests>=2.28.0
-openpyxl>=3.1.0
-reportlab>=4.0.0
-python-dateutil>=2.8.0
-pyserial>=3.5
-jdatetime>=4.0.0
-Pillow>=10.0.0
+# Windows 7 / 10 / 11 runtime (Python 3.8, 32-bit and 64-bit builds).
+# Pinned to the last releases that still ship Windows 7 compatible binaries:
+# - Python 3.8 is the last CPython with Windows 7 support.
+# - Qt 5.15 (PyQt5) is the last Qt series with Windows 7 support; PyQt6/Qt6
+#   requires Windows 10+.
+# - Pillow 9.5 is the last Windows 7 compatible release.
+# - reportlab 3.6.13 provides 32-bit wheels for Python 3.8.
+# - pywin32 228 is required by PyQt5-Frameless-Window and supports Windows 7.
+PyQt5==5.15.11
+PyQt-Fluent-Widgets==1.11.3
+pywin32==228; sys_platform == "win32"
+SQLAlchemy==2.0.36
+requests==2.32.3
+openpyxl==3.1.5
+reportlab==3.6.13
+python-dateutil==2.9.0.post0
+pyserial==3.5
+jdatetime==4.1.0
+Pillow==9.5.0
 # Required for correct Persian text in exported PDFs (export_service.rtl()).
 # Without these, rtl() is a no-op and Arabic shaping/joining is lost.
-arabic-reshaper>=3.0.0
-python-bidi>=0.4.2
+arabic-reshaper==3.0.0
+python-bidi==0.4.2
 # utils/auto_updater.py imports this at module level.
-packaging>=23.0
+packaging==24.2

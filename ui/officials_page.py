@@ -1,8 +1,8 @@
-from PyQt6.QtWidgets import (
+from PyQt5.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton,
     QLineEdit, QTextEdit, QDialog, QCheckBox, QFrame, QComboBox, QMessageBox
 )
-from PyQt6.QtCore import Qt, pyqtSignal
+from PyQt5.QtCore import Qt, pyqtSignal
 from ui.styles import Styles, get_font
 from ui.theme import theme_manager
 from ui.dialogs import confirm_delete
@@ -324,7 +324,7 @@ class OfficialsPage(QWidget):
         hint.setStyleSheet(f"color: {c.fg_muted}; font-size: 12px;")
         layout.addWidget(hint)
 
-        from PyQt6.QtWidgets import QScrollArea
+        from PyQt5.QtWidgets import QScrollArea
         self.scroll = QScrollArea()
         self.scroll.setWidgetResizable(True)
         self.scroll.setFrameShape(QFrame.Shape.NoFrame)

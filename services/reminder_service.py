@@ -1,7 +1,7 @@
 import logging
 
 import jdatetime
-from PyQt6.QtCore import QObject, QTimer, pyqtSignal
+from PyQt5.QtCore import QObject, QTimer, pyqtSignal
 
 from services import manager_program as program
 from services.event_sms import send_event_reminder

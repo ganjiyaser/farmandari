@@ -1,10 +1,10 @@
-from PyQt6.QtWidgets import (
+from PyQt5.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel,
     QFrame, QGridLayout, QGroupBox, QMessageBox,
     QTableWidget, QTableWidgetItem, QHeaderView, QSplitter,
     QInputDialog, QFileDialog
 )
-from PyQt6.QtCore import Qt
+from PyQt5.QtCore import Qt
 import html as html_lib
 import jdatetime
 import os

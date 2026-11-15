@@ -9,7 +9,7 @@
 
 import logging
 
-from PyQt6.QtCore import QThread, pyqtSignal
+from PyQt5.QtCore import QThread, pyqtSignal
 
 from models.models import EventType
 from services.repositories import calendar_repo, contact_repo, official_repo

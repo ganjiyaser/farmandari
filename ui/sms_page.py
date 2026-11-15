@@ -1,15 +1,15 @@
 import re
 import time
 
-from PyQt6.QtWidgets import (
+from PyQt5.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel,
     QLineEdit, QTableWidget, QTableWidgetItem, QHeaderView,
     QFrame, QMessageBox, QTextEdit, QComboBox, QProgressBar,
     QTabWidget, QFormLayout, QAbstractItemView, QCheckBox, QApplication,
     QSizePolicy, QInputDialog
 )
-from PyQt6.QtCore import Qt, QThread, pyqtSignal, QTimer
-from PyQt6.QtGui import QColor
+from PyQt5.QtCore import Qt, QThread, pyqtSignal, QTimer
+from PyQt5.QtGui import QColor
 from ui.styles import Styles, get_font
 from ui.theme import theme_manager
 from ui.dialogs import confirm

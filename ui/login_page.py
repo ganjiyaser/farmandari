@@ -1,9 +1,9 @@
-from PyQt6.QtWidgets import (
+from PyQt5.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QMessageBox, QFrame,
     QPushButton, QLineEdit, QGraphicsDropShadowEffect,
 )
-from PyQt6.QtCore import Qt, pyqtSignal, QTimer, QPointF, QRectF
-from PyQt6.QtGui import QColor, QBrush, QPainter, QPainterPath, QLinearGradient
+from PyQt5.QtCore import Qt, pyqtSignal, QTimer, QPointF, QRectF
+from PyQt5.QtGui import QColor, QBrush, QPainter, QPainterPath, QLinearGradient
 from qfluentwidgets import CheckBox, FluentIcon
 from ui.styles import Styles, get_font, FONT_CSS
 from ui.theme import theme_manager, ThemeMode
@@ -526,7 +526,7 @@ class UserSelectionPage(QWidget):
 
     def _select_user(self, user):
         # Show password dialog for this user
-        from PyQt6.QtWidgets import QDialog, QVBoxLayout, QLabel, QLineEdit, QPushButton, QHBoxLayout
+        from PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QLineEdit, QPushButton, QHBoxLayout
 
         dialog = QDialog(self)
         dialog.setWindowTitle(f"ورود به حساب {user.full_name}")
