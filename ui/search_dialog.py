@@ -9,6 +9,7 @@ from services.repositories import (
     contact_repo, calendar_repo,
     group_repo, note_repo, task_repo
 )
+from utils.window_utils import fit_window_to_screen
 
 
 class SearchResult(QFrame):
@@ -79,6 +80,7 @@ class SearchDialog(QDialog):
         self.setFont(get_font(10))
         self._setup_ui()
         self._search(query)
+        fit_window_to_screen(self)
 
     def _setup_ui(self):
         c = theme_manager.current

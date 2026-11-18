@@ -6,15 +6,16 @@ from PyQt5.QtWidgets import (
     QDialog, QVBoxLayout, QHBoxLayout, QPushButton, QLabel,
     QTableWidget, QTableWidgetItem, QHeaderView, QFrame,
     QMessageBox, QComboBox, QFileDialog, QProgressBar,
-    QAbstractItemView
+    QAbstractItemView, QScrollArea, QWidget
 )
-from PyQt5.QtCore import Qt, QThread, pyqtSignal
+from PyQt5.QtCore import Qt, QSize, QThread, pyqtSignal
 import openpyxl
 from ui.styles import Styles, get_font
 from ui.theme import theme_manager
 from ui.dialogs import confirm
 from models.models import ContactStatus
 from services.repositories import contact_repo
+from utils.window_utils import fit_window_to_screen
 
 
 COLUMN_MAPPING = {
@@ -268,9 +269,21 @@ class ExcelImportDialog(QDialog):
         self.headers = []
         self._importing = False
         self._setup_ui()
+        fit_window_to_screen(self, preferred=QSize(1100, 760))
 
     def _setup_ui(self):
-        layout = QVBoxLayout(self)
+        outer = QVBoxLayout(self)
+        outer.setContentsMargins(0, 0, 0, 0)
+        outer.setSpacing(0)
+        scroll = QScrollArea()
+        scroll.setWidgetResizable(True)
+        scroll.setFrameShape(QFrame.Shape.NoFrame)
+        host = QWidget()
+        host.setMinimumSize(960, 620)
+        scroll.setWidget(host)
+        outer.addWidget(scroll)
+
+        layout = QVBoxLayout(host)
         layout.setContentsMargins(16, 14, 16, 14)
         layout.setSpacing(10)
 

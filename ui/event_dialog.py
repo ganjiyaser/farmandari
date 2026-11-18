@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import (
     QTableWidget, QTableWidgetItem, QHeaderView,
     QAbstractItemView, QScrollArea, QSizePolicy, QListWidget, QListWidgetItem
 )
-from PyQt5.QtCore import Qt, QTime
+from PyQt5.QtCore import Qt, QSize, QTime
 from PyQt5.QtGui import QIntValidator
 from ui.styles import Styles, get_font
 from ui.theme import theme_manager
@@ -18,6 +18,7 @@ from services.repositories import (
     official_repo, participant_repo, holiday_repo
 )
 from ui.officials_page import position_label
+from utils.window_utils import fit_window_to_screen
 from services import conflict_service
 from services.event_sms import (
     DEFAULT_INVITE_TEMPLATE, DEFAULT_REMINDER_TEMPLATE,
@@ -94,6 +95,8 @@ class EventDialog(QDialog):
             self._sync_manager_checks()
             if self.default_date:
                 self._set_date_fields(self.default_date)
+        # روی نمایشگرهای کوتاه (HD) پنجره به فضای صفحه جمع می‌شود؛ بدنه اسکرول دارد
+        fit_window_to_screen(self, preferred=QSize(1260, 870))
 
     # ------------------------------------------------------------------ #
     #  استایل متمرکز و سازنده‌های مشترک ویجت

@@ -1,7 +1,7 @@
 """دیالوگ‌های ویرایش پست سازمانی و اطلاعات کامل پرسنل."""
 
 import jdatetime
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtWidgets import (
     QDialog, QVBoxLayout, QHBoxLayout, QGridLayout, QLabel, QPushButton,
     QLineEdit, QTextEdit, QComboBox, QSpinBox, QCheckBox, QMessageBox,
@@ -12,6 +12,7 @@ from services.repositories import org_post_repo, employee_repo
 from services.sms_service import normalize_mobile, is_valid_mobile
 from ui.styles import Styles, get_font
 from ui.theme import theme_manager
+from utils.window_utils import fit_window_to_screen
 
 DEFAULT_CATEGORIES = [
     "فرمانداری", "حوزهٔ فرماندار", "معاونت سیاسی،امنیتی و اجتماعی",
@@ -288,6 +289,7 @@ class EmployeeDialog(QDialog):
         self._setup_ui(default_post_id)
         if self.employee:
             self._load()
+        fit_window_to_screen(self, preferred=QSize(820, 780))
 
     def _setup_ui(self, default_post_id):
         outer = QVBoxLayout(self)

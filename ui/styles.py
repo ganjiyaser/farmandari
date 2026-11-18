@@ -658,6 +658,7 @@ class Styles:
                 border-radius: {RADIUS_MD}px;
                 padding: {SPACE_MD}px {SPACE_LG}px;
             }}
+            QLabel {{ border: none; background-color: transparent; padding: 0; }}
         """
 
     @staticmethod
@@ -680,6 +681,7 @@ class Styles:
                 border-radius: {RADIUS_MD}px;
                 padding: {SPACE_MD}px;
             }}
+            QLabel {{ border: none; background-color: transparent; padding: 0; }}
         """
 
     # ------------------------------------------------------------------ #

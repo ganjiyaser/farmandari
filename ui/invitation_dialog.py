@@ -16,6 +16,7 @@ from services.repositories import participant_repo
 from ui.officials_page import position_label
 from ui.styles import Styles, get_font
 from ui.theme import theme_manager
+from utils.window_utils import fit_window_to_screen
 
 RSVP_LABELS = {
     ParticipantStatus.INVITED: "در انتظار پاسخ",
@@ -47,6 +48,7 @@ class ParticipantsDialog(QDialog):
         self.setMinimumSize(560, 420)
         self._setup_ui()
         self._load_participants()
+        fit_window_to_screen(self)
 
     def _setup_ui(self):
         c = theme_manager.current
@@ -242,6 +244,7 @@ class InvitationPreviewDialog(QDialog):
         self.setFont(get_font(10))
         self.setMinimumSize(640, 640)
         self._setup_ui()
+        fit_window_to_screen(self)
 
     def _setup_ui(self):
         c = theme_manager.current

@@ -4,13 +4,16 @@ import logging
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from PyQt5.QtWidgets import QApplication, QLabel, QShortcut
-from PyQt5.QtCore import Qt, QLockFile, QStandardPaths
+from PyQt5.QtWidgets import (
+    QApplication, QFrame, QLabel, QScrollArea, QShortcut,
+)
+from PyQt5.QtCore import Qt, QLockFile, QSize, QStandardPaths
 from PyQt5.QtGui import QKeySequence, QIcon
 
 from qfluentwidgets import (
     FluentWindow, NavigationItemPosition, setTheme, Theme, setThemeColor,
-    InfoBar, InfoBarPosition, MessageBox, NavigationAvatarWidget
+    InfoBar, InfoBarPosition, MessageBox, NavigationAvatarWidget,
+    ScrollBarHandleDisplayMode,
 )
 
 from ui.styles import get_font
@@ -38,7 +41,10 @@ from core.database import (
     clear_current_user_context,
 )
 from services.repositories import setting_repo, user_repo
-from utils.window_utils import center_on_screen
+from utils.window_utils import (
+    ScreenFitFilter, available_geometry, center_on_screen,
+    fit_window_to_screen, watch_window_screen,
+)
 from services.reminder_service import reminder_service
 
 
@@ -56,8 +62,8 @@ NAV_SPEC = [
     ("notes", NotesPage, "notes", "یادداشت‌ها", "EDIT", True),
     ("tasks", TasksPage, "tasks", "کارهای روزانه", "CHECKBOX", True),
     ("reports", ReportsPage, "reports", "گزارش‌ها", "DOCUMENT", True),
-    ("settings", SettingsPage, "settings", "تنظیمات", "SETTING", False),
-    ("users", UsersPage, "user_management", "مدیریت کاربران", "PEOPLE", False),
+    ("settings", SettingsPage, "settings", "تنظیمات", "SETTING", True),
+    ("users", UsersPage, "user_management", "مدیریت کاربران", "PEOPLE", True),
 ]
 
 
@@ -68,6 +74,7 @@ class MainWindow(FluentWindow):
         self.all_pages = {}
         self.setMicaEffectEnabled(False)
         self.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
+        self._setup_content_scroll()
 
         self._load_theme()
         self._create_pages()
@@ -79,6 +86,44 @@ class MainWindow(FluentWindow):
 
         search_shortcut = QShortcut(QKeySequence("Ctrl+F"), self)
         search_shortcut.activated.connect(lambda: self._global_search(""))
+
+    def _setup_content_scroll(self):
+        """محتوای صفحه‌ها در یک ناحیهٔ اسکرول‌شونده قرار می‌گیرد.
+
+        روی نمایشگرهای کوچک‌تر از اندازهٔ طراحی، به‌جای جمع‌کردن رابط
+        کاربری، اندازهٔ طبیعی حفظ می‌شود و اسکرول افقی/عمودی ظاهر می‌شود.
+        """
+        self._content_scroll = QScrollArea(self)
+        self._content_scroll.setObjectName("contentScroll")
+        self._content_scroll.setWidgetResizable(True)
+        self._content_scroll.setFrameShape(QFrame.Shape.NoFrame)
+        self._content_scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        self._content_scroll.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        self._content_scroll.setStyleSheet(
+            "QScrollArea#contentScroll { border: none; background: transparent; }"
+            "QScrollArea#contentScroll > QWidget > QWidget { background: transparent; }"
+        )
+        self._content_scroll.viewport().setAutoFillBackground(False)
+        self.widgetLayout.removeWidget(self.stackedWidget)
+        self.stackedWidget.setMinimumSize(1000, 600)
+        self._content_scroll.setWidget(self.stackedWidget)
+        self.widgetLayout.addWidget(self._content_scroll)
+
+    def _fit_scroll_content(self):
+        """ارتفاع محتوا بر اساس صفحهٔ جاری تعیین می‌شود.
+
+        اگر ارتفاع محتوا کمتر از نیاز طبیعی صفحه باشد، چیدمان فشرده
+        می‌شود (مثلاً دکمه‌ها روی هم می‌افتند). پس حداقل ارتفاع همان
+        اندازهٔ طبیعی صفحهٔ جاری است و در صورت کمبود فضا، اسکرول می‌آید.
+        """
+        page = self.stackedWidget.currentWidget()
+        min_h = 600
+        if page is not None:
+            try:
+                min_h = max(min_h, page.minimumSizeHint().height())
+            except Exception:
+                pass
+        self.stackedWidget.setMinimumHeight(min_h)
 
     def _load_theme(self):
         try:
@@ -125,7 +170,9 @@ class MainWindow(FluentWindow):
             if not is_super and perm not in accessible:
                 continue
             page = self.all_pages[attr][0]
-            pos = NavigationItemPosition.TOP if is_top else NavigationItemPosition.BOTTOM
+            # آیتم‌های اصلی در ناحیهٔ اسکرول‌شوندهٔ منو قرار می‌گیرند تا در
+            # صفحه‌های کوتاه، منو با چرخ ماوس/اسکرول در دسترس بماند.
+            pos = NavigationItemPosition.SCROLL if is_top else NavigationItemPosition.BOTTOM
             self.addSubInterface(page, fluent_icon(icon_name), title, pos)
             if first_page is None:
                 first_page = page
@@ -149,7 +196,7 @@ class MainWindow(FluentWindow):
             except Exception:
                 pass
 
-        self.navigationInterface.addSeparator()
+        self.navigationInterface.addSeparator(NavigationItemPosition.SCROLL)
         self.navigationInterface.addItem(
             routeKey="logout",
             icon=fluent_icon("RETURN", "CLOSE"),
@@ -166,20 +213,63 @@ class MainWindow(FluentWindow):
                     first_page.refresh()
                 except Exception:
                     pass
+            self._ensure_nav_visible(first_page)
+
+        # دستهٔ اسکرول منو همیشه دیده شود تا کاربر بتواند منو را جابه‌جا کند
+        try:
+            self.navigationInterface.panel.scrollArea.scrollDelagate.vScrollBar.setHandleDisplayMode(
+                ScrollBarHandleDisplayMode.ALWAYS
+            )
+        except Exception:
+            pass
 
         self.stackedWidget.currentChanged.connect(self._on_stack_changed)
 
+    def _ensure_nav_visible(self, page=None):
+        """آیتم فعال منو داخل ناحیهٔ اسکرول‌شونده دیده شود."""
+        if page is None:
+            page = self.stackedWidget.currentWidget()
+        if page is None:
+            return
+        try:
+            item = self.navigationInterface.widget(page.objectName())
+            if item is not None:
+                self.navigationInterface.panel.scrollArea.ensureWidgetVisible(item, 0, 12)
+        except Exception:
+            pass
+
     def _on_stack_changed(self, _index):
+        # صفحهٔ تازه از بالای ناحیهٔ اسکرول دیده شود
+        self._fit_scroll_content()
+        self._content_scroll.verticalScrollBar().setValue(0)
+        self._content_scroll.horizontalScrollBar().setValue(0)
         page = self.stackedWidget.currentWidget()
         if page and hasattr(page, "refresh"):
             try:
                 page.refresh()
             except Exception:
                 pass
+        self._ensure_nav_visible(page)
 
     def _init_window(self):
-        self.resize(1400, 900)
-        self.setMinimumSize(1100, 720)
+        # حداقلِ پنجره فقط برای خود قاب است؛ محتوا داخل ناحیهٔ اسکرول‌شونده
+        # اندازهٔ طبیعی خود را حفظ می‌کند.
+        self.setMinimumSize(900, 560)
+        self._prefer_maximized = False
+        preferred = QSize(1400, 900)
+        avail = available_geometry(self)
+        if avail is not None and not avail.isEmpty():
+            if avail.width() < preferred.width() or avail.height() < preferred.height():
+                # نمایشگر کوچک‌تر از اندازهٔ طراحی: تمام‌صفحه، با اسکرول
+                self._prefer_maximized = True
+            # اندازهٔ حالت عادی (پس از Restore Down) هم از صفحه بزرگ‌تر نشود
+            self.resize(
+                min(preferred.width(), max(700, avail.width() - 40)),
+                min(preferred.height(), max(480, avail.height() - 80)),
+            )
+        else:
+            self.resize(preferred)
+        self._fit_scroll_content()
         self.setWindowTitle(settings.APP_NAME)
         try:
             self.setWindowIcon(QIcon(":/qfluentwidgets/images/logo.png"))
@@ -303,7 +393,7 @@ class MainWindow(FluentWindow):
         self.hide()
         login = LoginPage()
         login.setWindowTitle(APP_TITLE)
-        login.resize(1100, 700)
+        fit_window_to_screen(login, preferred=QSize(1100, 700), center=False)
         login.login_successful.connect(lambda user, w=login: _open_main_from_login(user, w))
         app = QApplication.instance()
         # ارجاع به پنجرهٔ بسته‌شده پاک شود؛ وگرنه تایمر/کارگرهای پس‌زمینهٔ آن
@@ -319,8 +409,12 @@ def _open_main_from_login(user, login_window):
     app = QApplication.instance()
     win = MainWindow(user)
     app._main_window = win
-    win.show()
-    center_on_screen(win)
+    if getattr(win, "_prefer_maximized", False):
+        win.showMaximized()
+    else:
+        win.show()
+        center_on_screen(win)
+    watch_window_screen(win)
     login_window.close()
 
 
@@ -390,6 +484,9 @@ def main():
         logging.exception("Could not restore previous session; showing login")
 
     app = QApplication(sys.argv)
+    # هر دیالوگ تازه در اولین نمایش داخل فضای مانیتور جا داده می‌شود
+    app._screen_fit_filter = ScreenFitFilter(app)
+    app.installEventFilter(app._screen_fit_filter)
     app.setApplicationName(settings.APP_NAME)
     app.setOrganizationName(settings.APP_NAME)
     app.setApplicationVersion(settings.APP_VERSION)
@@ -401,12 +498,16 @@ def main():
     if saved_user:
         window = MainWindow(saved_user)
         app._main_window = window
-        window.show()
-        center_on_screen(window)
+        if getattr(window, "_prefer_maximized", False):
+            window.showMaximized()
+        else:
+            window.show()
+            center_on_screen(window)
+        watch_window_screen(window)
     else:
         login = LoginPage()
         login.setWindowTitle(APP_TITLE)
-        login.resize(1100, 700)
+        fit_window_to_screen(login, preferred=QSize(1100, 700), center=False)
         login.login_successful.connect(lambda user, w=login: _open_main_from_login(user, w))
         app._login_window = login
         login.show()

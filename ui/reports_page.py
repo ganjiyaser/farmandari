@@ -23,12 +23,18 @@ class ReportCard(QFrame):
     def __init__(self, title, value, color, parent=None):
         super().__init__(parent)
         c = theme_manager.current
+        self.setObjectName("reportCard")
         self.setStyleSheet(f"""
-            QFrame {{
+            QFrame#reportCard {{
                 background-color: {c.canvas_overlay};
                 border-radius: 12px;
                 border-right: 5px solid {color};
                 padding: 15px;
+            }}
+            QFrame#reportCard QLabel {{
+                background: transparent;
+                border: none;
+                padding: 0;
             }}
         """)
         self.setFixedHeight(100)
@@ -112,7 +118,8 @@ class ReportsPage(QWidget):
             }}
             QGroupBox::title {{
                 subcontrol-origin: margin;
-                right: 12px;
+                subcontrol-position: top left;
+                padding: 0 8px;
             }}
         """)
         export_layout = QVBoxLayout(export_group)
@@ -203,7 +210,8 @@ class ReportsPage(QWidget):
             }}
             QGroupBox::title {{
                 subcontrol-origin: margin;
-                right: 12px;
+                subcontrol-position: top left;
+                padding: 0 8px;
             }}
         """)
         gov_layout = QVBoxLayout(gov_group)

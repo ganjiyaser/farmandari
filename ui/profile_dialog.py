@@ -33,10 +33,16 @@ class ProfileDialog(QDialog):
         layout.setContentsMargins(0, 0, 0, 0)
 
         header = QFrame()
+        header.setObjectName("profileHeader")
         header.setStyleSheet(f"""
-            QFrame {{
+            QFrame#profileHeader {{
                 background-color: {c.primary};
                 padding: 20px;
+            }}
+            QFrame#profileHeader QLabel {{
+                background: transparent;
+                border: none;
+                padding: 0;
             }}
         """)
         header_layout = QHBoxLayout(header)

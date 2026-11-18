@@ -13,6 +13,7 @@ from PyQt5.QtWidgets import (
 from ui.styles import Styles, get_font
 from ui.theme import theme_manager
 from ui.dialogs import confirm_delete
+from utils.window_utils import fit_window_to_screen
 from services.repositories import (
     letter_repo, letter_referral_repo, letter_action_repo,
     decision_repo, decision_action_repo, setting_repo,
@@ -253,11 +254,16 @@ class ActionDialog(QDialog):
 def _tracking_row(title, meta, body, on_delete):
     c = theme_manager.current
     frame = QFrame()
+    frame.setObjectName("trackingRow")
     frame.setStyleSheet(f"""
-        QFrame {{
+        QFrame#trackingRow {{
             background-color: {c.canvas_overlay};
             border: 1px solid {c.border_default};
             border-radius: 8px;
+        }}
+        QFrame#trackingRow QLabel {{
+            background: transparent;
+            border: none;
         }}
     """)
     layout = QHBoxLayout(frame)
@@ -309,6 +315,7 @@ class LetterTrackingDialog(QDialog):
         self._setup_ui()
         self._refresh_referrals()
         self._refresh_actions()
+        fit_window_to_screen(self)
 
     def _setup_ui(self):
         c = theme_manager.current
@@ -562,6 +569,7 @@ class DecisionTrackingDialog(QDialog):
         _dialog_style(self)
         self._setup_ui()
         self._refresh_actions()
+        fit_window_to_screen(self)
 
     def _setup_ui(self):
         c = theme_manager.current

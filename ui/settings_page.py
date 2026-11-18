@@ -785,11 +785,16 @@ class SettingsPage(QWidget):
 
         for h in rows:
             row = QFrame()
+            row.setObjectName("holidayRow")
             row.setStyleSheet(f"""
-                QFrame {{
+                QFrame#holidayRow {{
                     background-color: {c.canvas_subtle};
                     border: 1px solid {c.border_default};
                     border-radius: 6px;
+                }}
+                QFrame#holidayRow QLabel {{
+                    background: transparent;
+                    border: none;
                 }}
             """)
             r_layout = QHBoxLayout(row)

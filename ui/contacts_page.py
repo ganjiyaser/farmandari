@@ -3,9 +3,9 @@ from PyQt5.QtWidgets import (
     QLineEdit, QTableWidget, QTableWidgetItem, QHeaderView,
     QFrame, QMessageBox, QDialog, QFormLayout, QTextEdit,
     QComboBox, QAbstractItemView, QCheckBox, QMenu, QListWidget,
-    QListWidgetItem, QSizePolicy, QGridLayout
+    QListWidgetItem, QSizePolicy, QGridLayout, QScrollArea
 )
-from PyQt5.QtCore import Qt, pyqtSignal, QTimer, QEvent
+from PyQt5.QtCore import Qt, QSize, pyqtSignal, QTimer, QEvent
 from PyQt5.QtGui import QColor, QFontMetrics
 import uuid
 from qfluentwidgets import (
@@ -17,6 +17,7 @@ from ui.theme import theme_manager
 from ui.dialogs import confirm_delete
 from models.models import ContactStatus
 from services.repositories import contact_repo, group_repo, contact_group_repo, setting_repo
+from utils.window_utils import fit_window_to_screen
 
 
 # مقدار ویژه برای گزینهٔ «بدون دسته» در نوار کناری (با شناسهٔ واقعی گروه تداخل ندارد)
@@ -184,6 +185,7 @@ class ContactDialog(QDialog):
         self._setup_ui()
         if self.contact:
             self._load_data()
+        fit_window_to_screen(self, preferred=QSize(1180, 740))
 
     # ------------------------------------------------------------------ #
     #  سازنده‌های مشترک ویجت (هم‌سبک با صفحه جلسه)
@@ -279,7 +281,19 @@ class ContactDialog(QDialog):
         c = theme_manager.current
         self.setStyleSheet(self._dialog_stylesheet(c))
 
-        layout = QVBoxLayout(self)
+        outer = QVBoxLayout(self)
+        outer.setContentsMargins(0, 0, 0, 0)
+        outer.setSpacing(0)
+        scroll = QScrollArea()
+        scroll.setWidgetResizable(True)
+        scroll.setFrameShape(QFrame.Shape.NoFrame)
+        scroll.setStyleSheet("QScrollArea { border: none; background: transparent; }")
+        host = QWidget()
+        host.setMinimumSize(960, 620)
+        scroll.setWidget(host)
+        outer.addWidget(scroll)
+
+        layout = QVBoxLayout(host)
         layout.setContentsMargins(20, 18, 20, 16)
         layout.setSpacing(12)
 
